@@ -2,11 +2,11 @@
     include('../connection.php');
     include("../admin/session.php");
 
-    $keyword = isset($_GET['keyword'])  ? $_GET['keyword'] : '' ; //ternary operator
+    $keyword = isset($_GET['keyword'])  ? $_GET['keyword'] : NULL ; //ternary operator
     if(isset($keyword)){
         $sql = "SELECT * from appointment where fullname like '%$keyword%'";
     }else{
-        $sql = "SELECT * from appointment";
+        $sql = "SELECT ap.id, ap.fullname, ap.phone, ap.bg, ap.address, ap.date, ap.time, sp.title, doc.fname, ap.status from appointment as ap INNER JOIN specialities as sp ON ap.sid = sp.id INNER JOIN doctor as doc ON ap.did = doc.id";
     }
     $result = mysqli_query($conn, $sql);
 
@@ -23,6 +23,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Appointment</title>
     <link rel="stylesheet" href="../assets/dash1.css">
+    <style>
+        .table-container td>button.disabled {
+            background-color: #F2F2F2;
+        }
+    </style>
 </head>
 <body>
     <section class="dashboard">
@@ -152,36 +157,8 @@
                             ?>
                                 <td><?php echo $row['fullname'] ?></td>
                                 <td><?php echo $row['id'] ?></td>
-                                <td><?php
-                                        $did = $row['did'];
-                                                
-                                        // echo $did;
-                                                 
-                                        if($did != ''){
-                                            $dsql = "SELECT fname FROM doctor where id=$did;";
-                                            $dresult = mysqli_query($conn, $dsql);
-                                                 
-                                            while($drow = mysqli_fetch_assoc($dresult)){
-                                                echo $drow['fname'];
-                                            }
-                                        }
-                                    ?>
-                                </td>
-                                <td><?php 
-                                        $sid = $row['sid'];
-                                                
-                                        // echo $sid;
-                                        
-                                        if($sid != ''){
-                                            $ssql = "SELECT title FROM specialities where id=$sid;";
-                                            $sresult = mysqli_query($conn, $ssql);
-                                        
-                                            while($srow = mysqli_fetch_assoc($sresult)){
-                                                echo $srow['title'];
-                                            }
-                                        }
-                                    ?>
-                                </td>
+                                <td><?php echo $row['fname']; ?></td>
+                                <td><?php echo $row['title']; ?></td>
                                 <td><?php echo $row['bg'] ?></td>
                                 <td><?php echo $row['address'] ?></td>
                                 <td><?php echo $row['phone'] ?></td>
@@ -189,12 +166,12 @@
                                 <td><?php echo $row['date'] ?></td>
                                 <td class="event">
                                     <button><a href="../admin/appointment/update.php?updateid=<?php echo $row['id']; ?>"><svg class="icon icon-pencil"><use xlink:href="#icon-pencil"></use></svg></a></button>
-                                    <button><a href="../admin/appointment/approve.php?approveid=<?php echo $row['id']; ?>"><svg class="icon icon-check-circle"><use xlink:href="#icon-check-circle"></use></svg></a></button>
+                                    <button 
+                                        
+                                        <?php $class = ($row['status'] == 1 || $row['status'] == 2) ? 'class="disabled"' : ''; echo ($row['status'] == 1) ? 'class="disabled" onclick="return false"' : (($row['status'] == 2) ? ' onclick="return false";' : ' onclick="return true";') ;?>><a 
+                                        style="<?php echo ($row['status'] == 1) ? 'color: gray;' : (($row['status'] == 2) ? 'color: blue;' : 'color: green;') ;?>" href="../admin/appointment/approve.php?approveid=<?php echo $row['id']; ?>"><svg class="icon icon-check-circle"><use xlink:href="#icon-check-circle" ></use></svg></a></button>
                                     <button><a href="../admin/appointment/delete.php?deleteid=<?php echo $row['id']; ?>"><svg class="icon icon-trash"><use xlink:href="#icon-trash"></use></svg></a></button>
                                 </td>
-                                <!-- <td><?php
-                                    $usql = "UPDATE appointment SET status=1 where email='$useremail';";
-                                ?></td> -->
                         </tr>
                             <?php   
                                 }

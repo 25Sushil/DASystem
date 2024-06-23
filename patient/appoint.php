@@ -8,24 +8,10 @@
     $uresult = mysqli_query($conn, $usql);
     $urow = mysqli_fetch_assoc($uresult);
 
-    $keyword = isset($_GET['keyword'])  ? $_GET['keyword'] : '' ; //ternary operator
-    if(isset($keyword)){
-        $sql = "SELECT * from appointment where fullname like '%$keyword%'";
-    }else{
-        $sql = "SELECT * from appointment where email='$useremail';";
-    }
+
+    $sql = "SELECT ap.id, ap.fullname, ap.email, ap.phone, ap.bg, ap.address, sp.title, doc.fname, ap.date, ap.time, ap.status from appointment as ap INNER JOIN specialities as sp ON ap.sid = sp.id INNER JOIN doctor as doc ON ap.did = doc.id where ap.email='$useremail';";
     $result = mysqli_query($conn, $sql);
 
-    $asql = "SELECT * FROM appointment WHERE email='$useremail';";
-    $aresult = mysqli_query($conn, $asql);
-
-    $filter = isset($_GET['date'])  ? $_GET['date'] : '' ; //ternary operator
-    if(isset($filter)){
-        $dsql = "SELECT date from appointment where date like '%$filter%'";
-    }else{
-        $dsql = "SELECT * from appointment";
-    }
-    $dresult = mysqli_query($conn, $dsql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -148,62 +134,23 @@
                 <h2> Appointment's</h2><br>
                 <div class="cards" id="cards">
                     <?php
-                        $asql = "SELECT * FROM appointment WHERE email='$useremail';";
-                        $aresult = mysqli_query($conn, $asql);
-                        while($arow = mysqli_fetch_assoc($aresult)){
+                        while($row = mysqli_fetch_assoc($result)){
                     ?>
                     <div class="card">
                         <div class="title">
                             <div class="content">
-                                <p>Doctor name:
-                                    <?php 
-                                        $did = $arow['did'];
-                                                    
-                                        // echo $did;
-                                                
-                                        if($did != ''){
-                                            $dsql = "SELECT fname FROM doctor where id=$did;";
-                                            $dresult = mysqli_query($conn, $dsql);
-                                                
-                                            while($drow = mysqli_fetch_assoc($dresult)){
-                                                echo $drow['fname'];
-                                            }
-                                        }
-                                    ?>
-                                </p><br>
-                                <p>Patient name:
-                                    <?php
-                                        $name = $arow['fullname'];
-                                                    
-                                        echo $name;
+                                <p>Doctor name: <?php echo $row['fname']; ?></p><br>
+                                <p>Patient name: <b><?php echo $row['fullname']; ?></p><br></b>
+                                <p>Speciality: <?php echo $row['title'];?></p><br>
+                                <p>Appoint No: <?php echo $row['id']; ?> </p><br>
+                                <p>Date: <?php echo $row['date']; ?></p><br>
+                                <p>Time: <?php echo $row['time']; ?></p><br>
+                                <!-- <p>Status: <?php echo ($row['status'] == 1) ? "Approved" : (($row['status'] == 1) ? "Checked" : "Pending");?></p><br> -->
 
-                                    ?>
-                                </p><br>
-                                <p>Speciality:
-                                    <?php
-                                        $sid = $arow['sid'];
-                                                    
-                                        // echo $sid;
-                                            
-                                        if($sid != ''){
-                                            $ssql = "SELECT title FROM specialities where id=$sid;";
-                                            $sresult = mysqli_query($conn, $ssql);
-                                            
-                                            while($srow = mysqli_fetch_assoc($sresult)){
-                                                echo $srow['title'];
-                                            }
-                                        }
-                                    ?>
-                                </p><br>
-                                <p>Appoint No: <?php echo $arow['id']; ?> </p><br>
-                                <p>Date: <?php echo $arow['date']; ?></p><br>
-                                <p>Time: <?php echo $arow['time']; ?></p><br>
-                                <!-- <p>Status: <?php echo ($arow['status'] == 1) ? "Approved" : (($arow['status'] == 1) ? "Checked" : "Pending");?></p><br> -->
-
-                                <p>Status: <span style="<?php echo ($arow['status'] == 1) ? 'color: green;' : (($arow['status'] == 2) ? 'color: blue;' : 'color: red;') ;?>"><?php echo ($arow['status'] == 1) ? "Approved" : (($arow['status'] == 2) ? "Checked" : "Pending");?></span></p><br>
+                                <p>Status: <span style="<?php echo ($row['status'] == 1) ? 'color: green;' : (($row['status'] == 2) ? 'color: blue;' : 'color: red;') ;?>"><?php echo ($row['status'] == 1) ? "Approved" : (($row['status'] == 2) ? "Checked" : "Pending");?></span></p><br>
                             </div>
                             <div class="actions">
-                                <button class="book" type="submit"><a href="../patient/appointment/cancel.php?cancelid=<?php echo $arow['id']; ?>">Cancel Booking</a></button>
+                                <button class="book" type="submit"><a href="../patient/appointment/cancel.php?cancelid=<?php echo $row['id']; ?>">Cancel Booking</a></button>
                             </div>
                         </div>
                     </div>

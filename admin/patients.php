@@ -2,8 +2,7 @@
     include('../connection.php');
     include("../admin/session.php");
     
-    $sql = "SELECT * from patient";
-
+    $sql = "SELECT pa.id, pa.aid, ap.fullname, sp.title, doc.fname from patient as pa INNER JOIN appointment as ap ON pa.aid = ap.id INNER JOIN specialities as sp ON pa.sid = sp.id INNER JOIN doctor as doc ON pa.did = doc.id";
     $result = mysqli_query($conn, $sql);
 
     $useremail = $_SESSION["username"];
@@ -128,7 +127,7 @@
                 <table class="table-container">
                     <thead>
                         <tr>
-                            <th>Appoint No.</th>
+                            <th>Patient Name</th>
                             <th>Doctor Name</th>
                             <th>Speciality</th>
                             <th>Actions</th>
@@ -139,48 +138,19 @@
                         <tr>
                             <?php 
                                 while($row = mysqli_fetch_assoc($result)){
-                                ?>
-                                    <td><?php echo $row['aid'] ?></td>
-                                    <td><?php
-                                            
-                                        $did = $row['did'];
-                                                
-                                        // echo $did;
-                                                
-                                        if($did != ''){
-                                            $dsql = "SELECT fname FROM doctor where id=$did;";
-                                            $dresult = mysqli_query($conn, $dsql);
-                                                
-                                            while($drow = mysqli_fetch_assoc($dresult)){
-                                                echo $drow['fname'];
-                                            }
-                                        }
-                                        ?>
-                                    </td>
-                                    <td><?php
-                                            $sid = $row['sid'];
-                                                
-                                            // echo $sid;
-                                            
-                                            if($sid != ''){
-                                                $ssql = "SELECT title FROM specialities where id=$sid;";
-                                                $sresult = mysqli_query($conn, $ssql);
-                                            
-                                                while($srow = mysqli_fetch_assoc($sresult)){
-                                                    echo $srow['title'];
-                                                }
-                                            }
-                                        ?>
-                                    </td>
-                                    <td class="event">
-                                        <button><a href="../admin/patient/update.php?updateid=<?php echo $row['id']; ?>"><svg class="icon icon-pencil"><use xlink:href="#icon-pencil"></use></svg></a></button>
-                                        <button><a href="../admin/patient/delete.php?deleteid=<?php echo $row['id']; ?>"><svg class="icon icon-trash"><use xlink:href="#icon-trash"></use></svg></a></button>
-                                        <button><a href="../admin/patient/complete.php?completeid=<?php echo $row['id']; ?>"><svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark"></use></svg></a></button>
-                                    </td>
+                            ?>
+                                <td><?php echo $row['fullname']; ?></td>
+                                <td><?php echo $row['fname']; ?></td>
+                                <td><?php echo $row['title']; ?></td>
+                                <td class="event">
+                                    <button><a href="../admin/patient/update.php?updateid=<?php echo $row['id']; ?>"><svg class="icon icon-pencil"><use xlink:href="#icon-pencil"></use></svg></a></button>
+                                    <button><a href="../admin/patient/delete.php?deleteid=<?php echo $row['id']; ?>"><svg class="icon icon-trash"><use xlink:href="#icon-trash"></use></svg></a></button>
+                                    <button><a href="../admin/patient/complete.php?completeid=<?php echo $row['aid']; ?>"><svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark"></use></svg></a></button>
+                                </td>
                         </tr>
-                                <?php   
+                            <?php   
                                 }
-                                ?>
+                            ?>
                     </tbody>
                 </table>
             </div>

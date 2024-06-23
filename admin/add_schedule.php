@@ -45,7 +45,7 @@
             $doctor = $_POST['doctor'];
             $date = $_POST['date'];
 
-            $sql = "INSERT INTO `schedule` (`sid`, `time`,`fname`, `date`) VALUES ('$speciality','$time', '$doctor','$date');";
+            $sql = "INSERT INTO `schedule` (`sid`, `time`,`did`, `date`) VALUES ('$speciality','$time', '$doctor','$date');";
 
             $result = mysqli_query($conn, $sql);
             if($result){

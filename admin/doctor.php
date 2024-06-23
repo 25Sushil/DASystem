@@ -2,11 +2,12 @@
     include('../connection.php');
     include("../admin/session.php");
 
-    $keyword = isset($_GET['keyword'])  ? $_GET['keyword'] : '' ; //ternary operator
+    $keyword = isset($_GET['keyword'])  ? $_GET['keyword'] : NULL ; //ternary operator
     if(isset($keyword)){
-        $sql = "SELECT * from doctor where fname like '%$keyword%'";
+        $sql = "SELECT doc.id, doc.fname, doc.email, doc.phone, sp.title from doctor as doc INNER JOIN specialities as sp ON doc.sid = sp.id where fname like '%$keyword%'";
     }else{
-        $sql = "SELECT * from doctor";
+        // $sql = "SELECT * from doctor";
+        $sql = "SELECT doc.id, doc.fname, doc.email, doc.phone, sp.title from doctor as doc INNER JOIN specialities as sp ON doc.sid = sp.id";
     }
     $result = mysqli_query($conn, $sql);
     
@@ -153,21 +154,7 @@
                                             <td><?php echo $row['id'] ?></td>
                                             <td><?php echo $row['fname'] ?></td>
                                             <td><?php echo $row['email'] ?></td>
-                                            <td><?php 
-                                                $sid = $row['sid'];
-                                                
-                                                // echo $sid;
-                                                
-                                                if($sid != ''){
-                                                    $ssql = "SELECT title FROM specialities where id=$sid;";
-                                                    $sresult = mysqli_query($conn, $ssql);
-                                                
-                                                    while($srow = mysqli_fetch_assoc($sresult)){
-                                                        echo $srow['title'];
-                                                    }
-                                                }
-                                                ?>
-                                            </td>
+                                            <td><?php echo $row['title'] ?></td>
                                             <td><?php echo $row['phone'] ?></td>
                                             <td class="event">
                                                 <button><a href="../admin/doctor/update.php?updateid=<?php echo $row['id']; ?>"><svg class="icon icon-pencil"><use xlink:href="#icon-pencil"></use></svg></a></button>

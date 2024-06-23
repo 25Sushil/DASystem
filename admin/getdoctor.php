@@ -3,7 +3,7 @@
 
     include '../connection.php';
 
-    $sql = "SELECT id, fname from doctor where sid=$sid;";
+    $sql = "SELECT id, fname from doctor where id=$sid;";
     $result = mysqli_query($conn, $sql);
 
     if($result->num_rows > 0){

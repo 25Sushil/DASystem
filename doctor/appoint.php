@@ -2,8 +2,7 @@
     include('../connection.php');
     include('../doctor/session.php');
     
-    $sql = "SELECT * from appointment";
-
+    $sql = "SELECT ap.id, ap.fullname, ap.phone, ap.bg, ap.address, ap.date, ap.time, sp.title, doc.fname from appointment as ap INNER JOIN specialities as sp ON ap.sid = sp.id INNER JOIN doctor as doc ON ap.did = doc.id";
     $result = mysqli_query($conn, $sql);
 
     $useremail = $_SESSION["username"];
@@ -142,37 +141,8 @@
                             ?>
                                 <td style="padding: 16px;"><?php echo $row['fullname'] ?></td>
                                 <td><?php echo $row['id'] ?></td>
-                                <td><?php
-                                
-                                    $did = $row['did'];
-                                                
-                                    // echo $did;
-                                                
-                                    if($did != ''){
-                                        $dsql = "SELECT fname FROM doctor where id=$did;";
-                                        $dresult = mysqli_query($conn, $dsql);
-                                            
-                                        while($drow = mysqli_fetch_assoc($dresult)){
-                                            echo $drow['fname'];
-                                        }
-                                    }
-                                    ?>
-                                </td>
-                                <td><?php
-                                        $sid = $row['sid'];
-                                                
-                                        // echo $sid;
-                                            
-                                        if($sid != ''){
-                                            $ssql = "SELECT title FROM specialities where id=$sid;";
-                                            $sresult = mysqli_query($conn, $ssql);
-                                        
-                                            while($srow = mysqli_fetch_assoc($sresult)){
-                                                echo $srow['title'];
-                                            }
-                                        }
-                                    ?>
-                                </td>
+                                <td><?php echo $row['fname']; ?></td>
+                                <td><?php echo $row['title'];?></td>
                                 <td><?php echo $row['address'] ?></td>
                                 <td><?php echo $row['phone'] ?></td>
                                 <td><?php echo $row['time'] ?></td>

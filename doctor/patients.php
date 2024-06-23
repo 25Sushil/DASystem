@@ -130,10 +130,6 @@
                             <th>Appo. No.</th>
                             <th>Doctor</th>
                             <th>Speciality</th>
-                            <th>Address</th>
-                            <th>Phone</th>
-                            <th>Time</th>
-                            <th>Date</th>
                         </tr>
                     </thead>    
                     <tbody>
@@ -141,7 +137,7 @@
                             <?php 
                                 while($row = mysqli_fetch_assoc($result)){
                                 ?>
-                                    <td style="padding: 16px;"><?php echo $row['name'] ?></td>
+                                    <td style="padding: 16px;"><?php echo $row['pid'] ?></td>
                                     <td><?php echo $row['id'] ?></td>
                                     <td><?php
                                             
@@ -174,10 +170,6 @@
                                             }
                                         ?>
                                     </td>
-                                    <td><?php echo $row['address'] ?></td>
-                                    <td><?php echo $row['phone'] ?></td>
-                                    <td><?php echo $row['time'] ?></td>
-                                    <td><?php echo $row['date'] ?></td>
                         </tr>
                                 <?php   
                                 }

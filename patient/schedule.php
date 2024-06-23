@@ -2,13 +2,7 @@
     include('../connection.php');
     include("../session.php");
 
-    // $keyword = isset($_GET['keyword'])  ? $_GET['keyword'] : '' ; //ternary operator
-    // if(isset($keyword)){
-    //     $sql = "SELECT * from schedule where fname like '%$keyword%'";
-    // }else{
-    //     $sql = "SELECT * from schedule";
-    // }
-    $sql = "SELECT * from schedule";
+    $sql = "SELECT sp.title, sc.time, doc.fname, sc.date from schedule as sc INNER JOIN specialities as sp ON sc.sid = sp.id INNER JOIN doctor as doc ON sc.did = doc.id";
     $result = mysqli_query($conn, $sql);
 
     $useremail = $_SESSION["username"];
@@ -50,10 +44,6 @@
                 <div class="head-bar">
                     <h2>Schedule's</h2>
                 </div>
-                <!-- <form action="#" method="get" class="search-bar">
-                    <input type="text" name="keyword" placeholder="Search..">
-                    <button type="submit" class="search"><svg class="icon icon-search"><use xlink:href="#icon-search"></use></svg></button>
-                </form> -->
                 <div class="date-container">
                     <h1>Today's Date</h1>
                     <p id="date"></p>
@@ -142,35 +132,35 @@
                         <div class="title">
                         <div class="content">
                             <p>Doctor: 
-                                <?php 
-                                    $did = $row['fname'];
+                                <?php echo $row['fname'];
+                                    // $did = $row['did'];
                                                 
-                                    // echo $did;
+                                    // // echo $did;
                                              
-                                    if($did != ''){
-                                        $dsql = "SELECT fname FROM doctor where id=$did;";
-                                        $dresult = mysqli_query($conn, $dsql);
+                                    // if($did != ''){
+                                    //     $dsql = "SELECT fname FROM doctor where id=$did;";
+                                    //     $dresult = mysqli_query($conn, $dsql);
                                              
-                                        while($drow = mysqli_fetch_assoc($dresult)){
-                                            echo $drow['fname'];
-                                        }
-                                    }
+                                    //     while($drow = mysqli_fetch_assoc($dresult)){
+                                    //         echo $drow['fname'];
+                                    //     }
+                                    // }
                                 ?>
                             </p><br>
                             <p>Speciality: 
-                                <?php
-                                    $sid = $row['sid'];
+                                <?php echo $row['title'];
+                                    // $sid = $row['sid'];
                                                 
-                                    // echo $sid;
+                                    // // echo $sid;
                                         
-                                    if($sid != ''){
-                                        $ssql = "SELECT title FROM specialities where id=$sid;";
-                                        $sresult = mysqli_query($conn, $ssql);
+                                    // if($sid != ''){
+                                    //     $ssql = "SELECT title FROM specialities where id=$sid;";
+                                    //     $sresult = mysqli_query($conn, $ssql);
                                         
-                                        while($srow = mysqli_fetch_assoc($sresult)){
-                                            echo $srow['title'];
-                                        }
-                                    }
+                                    //     while($srow = mysqli_fetch_assoc($sresult)){
+                                    //         echo $srow['title'];
+                                    //     }
+                                    // }
                                 ?>
                             </p><br>
                             <p>Date: <?php echo $row['time'] ?></p><br>

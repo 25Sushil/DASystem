@@ -2,8 +2,7 @@
     include('../connection.php');
     include('../doctor/session.php');
 
-    $sql = "SELECT * from schedule";
-
+    $sql = "SELECT sp.id, sp.title, sc.time, doc.fname, sc.date from schedule as sc INNER JOIN specialities as sp ON sc.sid = sp.id INNER JOIN doctor as doc ON sc.did = doc.id";
     $result = mysqli_query($conn, $sql);
 
     $useremail = $_SESSION["username"];
@@ -135,38 +134,9 @@
                                 <?php 
                                     while($row = mysqli_fetch_assoc($result)){
                                 ?>
-                                    <td style="padding: 16px;"><?php 
-                                        $sid = $row['sid'];
-                                                
-                                        // echo $sid;
-                                        
-                                        if($sid != ''){
-                                            $ssql = "SELECT title FROM specialities where id=$sid;";
-                                            $sresult = mysqli_query($conn, $ssql);
-                                        
-                                            while($srow = mysqli_fetch_assoc($sresult)){
-                                                echo $srow['title'];
-                                            }
-                                        }
-                                    ?></td>
-
+                                    <td style="padding: 16px;"><?php echo $row['title'];?></td>
                                     <td><?php echo $row['time'] ?></td>
-                                    
-                                    <td><?php 
-                                            $did = $row['fname'];
-                                                        
-                                            // echo $did;
-                                                    
-                                            if($did != ''){
-                                                $dsql = "SELECT fname FROM doctor where id=$did;";
-                                                $dresult = mysqli_query($conn, $dsql);
-                                                    
-                                                while($drow = mysqli_fetch_assoc($dresult)){
-                                                    echo $drow['fname'];
-                                                }
-                                            }
-                                        ?>
-                                    </td>
+                                    <td><?php echo $row['fname'] ?></td>
                                     <td><?php echo $row['date'] ?></td>
                             </tr>
                                 <?php   
