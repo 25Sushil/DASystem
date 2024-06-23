@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2024 at 03:13 PM
+-- Generation Time: Jun 23, 2024 at 04:02 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -66,9 +66,7 @@ CREATE TABLE `appointment` (
 --
 
 INSERT INTO `appointment` (`id`, `fullname`, `email`, `phone`, `bg`, `address`, `sid`, `did`, `date`, `time`, `status`) VALUES
-(26, 'Sushil Bohora', 'bohorasushil28@gmail.com', '9825151685', 'O-', 'Thankot', 16, 54, '2024-06-18', '15:53:00', 1),
-(28, 'Binit Gurung', 'bohorasushil28@gmail.com', '9825112121', 'AB-', 'Thankot', 17, 53, '2024-06-19', '16:59:00', 2),
-(29, 'sushmita', 'bohorasushil28@gmail.com', '9840176421', 'B+', 'kathmandu', 20, 52, '2024-06-19', '15:00:00', 1);
+(35, 'Sushil Bohora', 'bohorasushil28@gmail.com', '9825151685', 'O-', 'Thankot', 16, 54, '2024-06-23', '18:14:00', 2);
 
 -- --------------------------------------------------------
 
@@ -120,9 +118,7 @@ CREATE TABLE `patient` (
 --
 
 INSERT INTO `patient` (`id`, `aid`, `sid`, `did`, `created-at`) VALUES
-(27, 28, 17, 53, '2024-06-19 01:07:45'),
-(28, 29, 20, 52, '2024-06-19 01:10:46'),
-(33, 26, 16, 54, '2024-06-19 07:09:09');
+(97, 35, 16, 54, '2024-06-23 12:29:55');
 
 -- --------------------------------------------------------
 
@@ -156,9 +152,16 @@ CREATE TABLE `schedule` (
   `id` int(11) NOT NULL,
   `sid` int(11) NOT NULL,
   `time` time NOT NULL,
-  `fname` int(11) NOT NULL,
+  `did` int(11) NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `schedule`
+--
+
+INSERT INTO `schedule` (`id`, `sid`, `time`, `did`, `date`) VALUES
+(41, 18, '12:08:00', 51, '2024-06-23');
 
 -- --------------------------------------------------------
 
@@ -208,8 +211,8 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `appointment`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `sid` (`sid`),
-  ADD KEY `did` (`did`);
+  ADD KEY `did` (`did`),
+  ADD KEY `appointment_ibfk_1` (`sid`);
 
 --
 -- Indexes for table `doctor`
@@ -239,7 +242,8 @@ ALTER TABLE `register`
 --
 ALTER TABLE `schedule`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `schedule_ibfk_1` (`sid`);
+  ADD KEY `sid` (`sid`),
+  ADD KEY `did` (`did`);
 
 --
 -- Indexes for table `specialities`
@@ -261,7 +265,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `doctor`
@@ -273,7 +277,7 @@ ALTER TABLE `doctor`
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `register`
@@ -285,7 +289,7 @@ ALTER TABLE `register`
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `specialities`
@@ -314,9 +318,14 @@ ALTER TABLE `doctor`
 -- Constraints for table `patient`
 --
 ALTER TABLE `patient`
-  ADD CONSTRAINT `patient_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `specialities` (`id`),
-  ADD CONSTRAINT `patient_ibfk_2` FOREIGN KEY (`did`) REFERENCES `doctor` (`id`),
   ADD CONSTRAINT `patient_ibfk_3` FOREIGN KEY (`aid`) REFERENCES `appointment` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `schedule`
+--
+ALTER TABLE `schedule`
+  ADD CONSTRAINT `schedule_ibfk_1` FOREIGN KEY (`sid`) REFERENCES `specialities` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `schedule_ibfk_2` FOREIGN KEY (`did`) REFERENCES `doctor` (`id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
