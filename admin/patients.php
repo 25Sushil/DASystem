@@ -1,9 +1,17 @@
 <?php
     include('../connection.php');
     include("../admin/session.php");
-    
-    $sql = "SELECT pa.id, pa.aid, ap.fullname, sp.title, doc.fname from patient as pa INNER JOIN appointment as ap ON pa.aid = ap.id INNER JOIN specialities as sp ON pa.sid = sp.id INNER JOIN doctor as doc ON pa.did = doc.id";
+
+    $keyword = isset($_GET['keyword'])  ? $_GET['keyword'] : NULL ; //ternary operator
+    if(isset($keyword)){
+        $sql = "SELECT pa.id, pa.aid, ap.fullname, sp.title, doc.fname from patient as pa INNER JOIN appointment as ap ON pa.aid = ap.id INNER JOIN specialities as sp ON pa.sid = sp.id INNER JOIN doctor as doc ON pa.did = doc.id where fullname like '%$keyword%'";
+    }else{
+        $sql = "SELECT pa.id, pa.aid, ap.fullname, sp.title, doc.fname from patient as pa INNER JOIN appointment as ap ON pa.aid = ap.id INNER JOIN specialities as sp ON pa.sid = sp.id INNER JOIN doctor as doc ON pa.did = doc.id";
+    }
     $result = mysqli_query($conn, $sql);
+    
+    // $sql = "SELECT pa.id, pa.aid, ap.fullname, sp.title, doc.fname from patient as pa INNER JOIN appointment as ap ON pa.aid = ap.id INNER JOIN specialities as sp ON pa.sid = sp.id INNER JOIN doctor as doc ON pa.did = doc.id";
+    // $result = mysqli_query($conn, $sql);
 
     $useremail = $_SESSION["username"];
     $usql = "SELECT name FROM admin where email='$useremail';";
@@ -45,10 +53,10 @@
         </div>
         <section class="main">
             <div class="head">
-                <div class="search-bar">
-                    <input type="text" placeholder="Search..">
-                    <button type="submit"><svg class="icon icon-search"><use xlink:href="#icon-search"></use></svg></button>
-                </div>
+                <form action="#" method="get" class="search-bar">
+                    <input type="text" name="keyword" placeholder="Search..">
+                    <button type="submit" class="search"><svg class="icon icon-search"><use xlink:href="#icon-search"></use></svg></button>
+                </form>
                 <div class="date-container">
                     <h1>Today's Date</h1>
                     <p id="date"></p>

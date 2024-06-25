@@ -2,7 +2,12 @@
     include('../connection.php');
     include("../admin/session.php");
 
-    $sql = "SELECT * from specialities";
+    $keyword = isset($_GET['keyword'])  ? $_GET['keyword'] : NULL ; //ternary operator
+    if(isset($keyword)){
+        $sql = "SELECT * from specialities where title like '%$keyword%'";
+    }else{
+        $sql = "SELECT * from specialities";
+    }
     $result = mysqli_query($conn, $sql);
 
     $useremail = $_SESSION["username"];
@@ -45,10 +50,11 @@
         </div>
         <div class="main">
             <div class="head">
-                <div class="search-bar">
-                    <input type="text" placeholder="Search..">
-                    <button type="submit"><svg class="icon icon-search"><use xlink:href="#icon-search"></use></svg></button>
-                </div>
+                <form action="#" method="get" class="search-bar">
+                    <input type="text" name="keyword" placeholder="Search..">
+                    <button type="submit" class="search"><svg class="icon icon-search"><use xlink:href="#icon-search"></use></svg></button>
+                </form>
+
                 <div class="date-container">
                     <h1>Today's Date</h1>
                     <p id="date"></p>

@@ -128,48 +128,47 @@
                 </div>
             </div><br>
 
-                <div class="doctor-info">
-                    <div class="add">
-                        <h2>Add New Doctor</h2>
-                        <button><a href="add_doctors.php">+ Add New</a></button>
-                    </div><br>
+            <div class="doctor-info">
+                <div class="add">
+                    <h2>Add New Doctor</h2>
+                    <button><a href="add_doctors.php">+ Add New</a></button>
+                </div><br>
                     
-                    <div class="tabular">
-                        <h2>All Doctor's</h2><br>
-                        <table class="table-container">
-                            <thead>
+                <div class="tabular">
+                    <h2>All Doctor's</h2><br>
+                    <table class="table-container">
+                        <thead>
+                            <tr>
+                                <th>S.N.</th>
+                                <th>Doctor Name</th>
+                                <th>Email</th>
+                                <th>Speciality</th>
+                                <th>phone</th>
+                                <th>Events</th>
+                            </tr>
+                            <tbody>
                                 <tr>
-                                    <th>S.N.</th>
-                                    <th>Doctor Name</th>
-                                    <th>Email</th>
-                                    <th>Speciality</th>
-                                    <th>phone</th>
-                                    <th>Events</th>
-                                </tr>
-                                <tbody>
-                                    <tr>
                                         <?php 
-                                            while($row = mysqli_fetch_assoc($result)){
-                                        ?>
-                                            <td><?php echo $row['id'] ?></td>
-                                            <td><?php echo $row['fname'] ?></td>
-                                            <td><?php echo $row['email'] ?></td>
-                                            <td><?php echo $row['title'] ?></td>
-                                            <td><?php echo $row['phone'] ?></td>
-                                            <td class="event">
-                                                <button><a href="../admin/doctor/update.php?updateid=<?php echo $row['id']; ?>"><svg class="icon icon-pencil"><use xlink:href="#icon-pencil"></use></svg></a></button>
-                                                <button><a href="../admin/doctor/delete.php?deleteid=<?php echo $row['id']; ?>"><svg class="icon icon-trash"><use xlink:href="#icon-trash"></use></svg></a></button>
-                                            </td>
-                                    </tr>
-                                    <?php   
-                                        }
+                                        while($row = mysqli_fetch_assoc($result)){
                                     ?>
-                                </tbody>
-                            </thead>
-                        </table>
-                    </div>
+                                        <td><?php echo $row['id'] ?></td>
+                                        <td><?php echo $row['fname'] ?></td>
+                                        <td><?php echo $row['email'] ?></td>
+                                        <td><?php echo $row['title'] ?></td>
+                                        <td><?php echo $row['phone'] ?></td>
+                                        <td class="event">
+                                            <button><a href="../admin/doctor/update.php?updateid=<?php echo $row['id']; ?>"><svg class="icon icon-pencil"><use xlink:href="#icon-pencil"></use></svg></a></button>
+                                            <button><a href="../admin/doctor/delete.php?deleteid=<?php echo $row['id']; ?>"><svg class="icon icon-trash"><use xlink:href="#icon-trash"></use></svg></a></button>
+                                        </td>
+                                </tr>
+                                <?php   
+                                    }
+                                ?>
+                            </tbody>
+                        </thead>
+                    </table>
                 </div>
-           
+            </div>
         </section>
     </section>
 

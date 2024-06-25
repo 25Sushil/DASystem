@@ -2,7 +2,12 @@
     include('../connection.php');
     include('../doctor/session.php');
 
-    $sql = "SELECT sp.id, sp.title, sc.time, doc.fname, sc.date from schedule as sc INNER JOIN specialities as sp ON sc.sid = sp.id INNER JOIN doctor as doc ON sc.did = doc.id";
+    $keyword = isset($_GET['keyword'])  ? $_GET['keyword'] : NULL ; //ternary operator
+    if(isset($keyword)){
+        $sql = "SELECT sp.id, sp.title, sc.time, doc.fname, sc.date from schedule as sc INNER JOIN specialities as sp ON sc.sid = sp.id INNER JOIN doctor as doc ON sc.did = doc.id where title like '%$keyword%'";
+    }else{
+        $sql = "SELECT sp.id, sp.title, sc.time, doc.fname, sc.date from schedule as sc INNER JOIN specialities as sp ON sc.sid = sp.id INNER JOIN doctor as doc ON sc.did = doc.id";
+    }
     $result = mysqli_query($conn, $sql);
 
     $useremail = $_SESSION["username"];
@@ -40,10 +45,10 @@
         </div>
         <section class="main">
             <div class="head">
-                <div class="search-bar">
-                    <input type="text" placeholder="Search..">
-                    <button type="submit">Search</button>
-                </div>
+                <form action="#" method="get" class="search-bar">
+                    <input type="text" name="keyword" placeholder="Search..">
+                    <button type="submit" class="search"><svg class="icon icon-search"><use xlink:href="#icon-search"></use></svg></button>
+                </form>
                 <div class="date-container">
                     <h1>Today's Date</h1>
                     <p id="date"></p>
@@ -65,8 +70,7 @@
                             }else{
                                 echo '<h3>0</h3>';
                             }
-                        ?>
-                        <svg class="icon icon-medical_services"><use xlink:href="#icon-medical_services"></use></svg><br>
+                        ?><svg class="icon icon-medical_services"><use xlink:href="#icon-medical_services"></use></svg><br>
                         <h4>Doctor's</h4><br>
                     </div>
             
@@ -177,6 +181,9 @@
             </symbol>
             <symbol id="icon-dashboard" viewBox="0 0 28 28">
                 <path d="M6 18c0-1.109-0.891-2-2-2s-2 0.891-2 2 0.891 2 2 2 2-0.891 2-2zM9 11c0-1.109-0.891-2-2-2s-2 0.891-2 2 0.891 2 2 2 2-0.891 2-2zM15.687 18.516l1.578-5.969c0.125-0.531-0.187-1.078-0.719-1.219v0c-0.531-0.141-1.078 0.187-1.219 0.719l-1.578 5.969c-1.234 0.094-2.312 0.953-2.656 2.219-0.422 1.609 0.547 3.25 2.141 3.672 1.609 0.422 3.25-0.547 3.672-2.141 0.328-1.266-0.203-2.547-1.219-3.25zM26 18c0-1.109-0.891-2-2-2s-2 0.891-2 2 0.891 2 2 2 2-0.891 2-2zM16 8c0-1.109-0.891-2-2-2s-2 0.891-2 2 0.891 2 2 2 2-0.891 2-2zM23 11c0-1.109-0.891-2-2-2s-2 0.891-2 2 0.891 2 2 2 2-0.891 2-2zM28 18c0 2.688-0.766 5.281-2.203 7.547-0.187 0.281-0.5 0.453-0.844 0.453h-21.906c-0.344 0-0.656-0.172-0.844-0.453-1.437-2.25-2.203-4.859-2.203-7.547 0-7.719 6.281-14 14-14s14 6.281 14 14z"></path>
+            </symbol>
+            <symbol id="icon-search" viewBox="0 0 32 32">
+                <path d="M31.008 27.231l-7.58-6.447c-0.784-0.705-1.622-1.029-2.299-0.998 1.789-2.096 2.87-4.815 2.87-7.787 0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12c2.972 0 5.691-1.081 7.787-2.87-0.031 0.677 0.293 1.515 0.998 2.299l6.447 7.58c1.104 1.226 2.907 1.33 4.007 0.23s0.997-2.903-0.23-4.007zM12 20c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8z"></path>
             </symbol>
         </defs>
     </svg>

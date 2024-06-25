@@ -8,7 +8,6 @@
 
     $row = mysqli_fetch_assoc($result);
     $aid = $row['id'];
-    $pid = $row['fullname'];
     $speciality = $row['sid'];
     $did = $row['did'];
 
@@ -18,7 +17,7 @@
         $usql = "UPDATE appointment SET status=1 where id='$id';";
         $uresult = mysqli_query($conn, $usql);
 
-        $sql = "INSERT INTO `patient` (`aid`, `pid`, `sid`, `did`) VALUES ('$aid', '$pid', '$speciality', '$did'); "; 
+        $sql = "INSERT INTO `patient` (`aid`, `sid`, `did`) VALUES ('$aid', '$speciality', '$did'); "; 
         $result = mysqli_query($conn, $sql);
         if($result){
             header ('location: ../../admin/patients.php');

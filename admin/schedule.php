@@ -2,12 +2,15 @@
     include('../connection.php');
     include("../admin/session.php");
 
-    // $sql = "SELECT * from schedule";
-    $sql = "SELECT sp.id, sp.title, sc.time, doc.fname, sc.date from schedule as sc INNER JOIN specialities as sp ON sc.sid = sp.id INNER JOIN doctor as doc ON sc.did = doc.id";
+    $keyword = isset($_GET['keyword'])  ? $_GET['keyword'] : NULL ; //ternary operator
+    if(isset($keyword)){
+        $sql = "SELECT sp.id, sp.title, sc.time, doc.fname, sc.date from schedule as sc INNER JOIN specialities as sp ON sc.sid = sp.id INNER JOIN doctor as doc ON sc.did = doc.id where title like '%$keyword%'";
+    }else{
+        $sql = "SELECT sp.id, sp.title, sc.time, doc.fname, sc.date from schedule as sc INNER JOIN specialities as sp ON sc.sid = sp.id INNER JOIN doctor as doc ON sc.did = doc.id";
+    }
     $result = mysqli_query($conn, $sql);
 
     $useremail = $_SESSION["username"];
-
     $usql = "SELECT name FROM admin where email='$useremail';";
     $uresult = mysqli_query($conn, $usql);
 
@@ -48,10 +51,11 @@
         </div>
         <div class="main">
             <div class="head">
-                <div class="search-bar">
-                    <input type="text" placeholder="Search..">
-                    <button type="submit"><svg class="icon icon-search"><use xlink:href="#icon-search"></use></svg></button>
-                </div>
+                <form action="#" method="get" class="search-bar">
+                    <input type="text" name="keyword" placeholder="Search..">
+                    <button type="submit" class="search"><svg class="icon icon-search"><use xlink:href="#icon-search"></use></svg></button>
+                </form>
+
                 <div class="date-container">
                     <h1>Today's Date</h1>
                     <p id="date"></p>

@@ -2,8 +2,12 @@
     include('../connection.php');
     include('../doctor/session.php');
 
-    $sql = "SELECT * from patient";
-
+    $keyword = isset($_GET['keyword'])  ? $_GET['keyword'] : NULL ; //ternary operator
+    if(isset($keyword)){
+        $sql = "SELECT pa.id, pa.aid, ap.fullname, sp.title, doc.fname from patient as pa INNER JOIN appointment as ap ON pa.aid = ap.id INNER JOIN specialities as sp ON pa.sid = sp.id INNER JOIN doctor as doc ON pa.did = doc.id where fullname like '%$keyword%'";
+    }else{
+        $sql = "SELECT pa.id, pa.aid, ap.fullname, sp.title, doc.fname from patient as pa INNER JOIN appointment as ap ON pa.aid = ap.id INNER JOIN specialities as sp ON pa.sid = sp.id INNER JOIN doctor as doc ON pa.did = doc.id";
+    }
     $result = mysqli_query($conn, $sql);
 
     $useremail = $_SESSION["username"];
@@ -43,10 +47,10 @@
 
         <div class="main">
             <div class="head">
-                <div class="search-bar">
-                    <input type="text" placeholder="Search..">
-                    <button type="submit">Search</button>
-                </div>
+                <form action="#" method="get" class="search-bar">
+                    <input type="text" name="keyword" placeholder="Search..">
+                    <button type="submit" class="search"><svg class="icon icon-search"><use xlink:href="#icon-search"></use></svg></button>
+                </form>
                 <div class="date-container">
                     <h1>Today's Date</h1>
                     <p id="date"></p>
@@ -127,8 +131,7 @@
                     <thead>
                         <tr>
                             <th>Patient Name</th>
-                            <th>Appo. No.</th>
-                            <th>Doctor</th>
+                            <th>Doctor Name</th>
                             <th>Speciality</th>
                         </tr>
                     </thead>    
@@ -136,42 +139,12 @@
                         <tr>
                             <?php 
                                 while($row = mysqli_fetch_assoc($result)){
-                                ?>
-                                    <td style="padding: 16px;"><?php echo $row['pid'] ?></td>
-                                    <td><?php echo $row['id'] ?></td>
-                                    <td><?php
-                                            
-                                        $did = $row['did'];
-                                                
-                                        // echo $did;
-                                                
-                                        if($did != ''){
-                                            $dsql = "SELECT fname    FROM doctor where id=$did;";
-                                            $dresult = mysqli_query($conn, $dsql);
-                                                
-                                            while($drow = mysqli_fetch_assoc($dresult)){
-                                                echo $drow['fname'];
-                                            }
-                                        }
-                                        ?>
-                                    </td>
-                                    <td><?php
-                                            $sid = $row['sid'];
-                                                
-                                            // echo $sid;
-                                            
-                                            if($sid != ''){
-                                                $ssql = "SELECT title FROM specialities where id=$sid;";
-                                                $sresult = mysqli_query($conn, $ssql);
-                                            
-                                                while($srow = mysqli_fetch_assoc($sresult)){
-                                                    echo $srow['title'];
-                                                }
-                                            }
-                                        ?>
-                                    </td>
+                            ?>
+                                <td style="padding: 16px;"><?php echo $row['fullname']; ?></td>
+                                <td><?php echo $row['fname']; ?></td>
+                                <td><?php echo $row['title']; ?></td>
                         </tr>
-                                <?php   
+                            <?php   
                                 }
                             ?>
                     </tbody>
@@ -215,6 +188,9 @@
             </symbol>
             <symbol id="icon-eye" viewBox="0 0 24 24">
                 <path d="M0.106 11.553c-0.136 0.274-0.146 0.603 0 0.894 0 0 0.396 0.789 1.12 1.843 0.451 0.656 1.038 1.432 1.757 2.218 0.894 0.979 2.004 1.987 3.319 2.8 1.595 0.986 3.506 1.692 5.698 1.692s4.103-0.706 5.698-1.692c1.315-0.813 2.425-1.821 3.319-2.8 0.718-0.786 1.306-1.562 1.757-2.218 0.724-1.054 1.12-1.843 1.12-1.843 0.136-0.274 0.146-0.603 0-0.894 0 0-0.396-0.789-1.12-1.843-0.451-0.656-1.038-1.432-1.757-2.218-0.894-0.979-2.004-1.987-3.319-2.8-1.595-0.986-3.506-1.692-5.698-1.692s-4.103 0.706-5.698 1.692c-1.315 0.813-2.425 1.821-3.319 2.8-0.719 0.786-1.306 1.561-1.757 2.218-0.724 1.054-1.12 1.843-1.12 1.843zM2.14 12c0.163-0.281 0.407-0.681 0.734-1.158 0.41-0.596 0.94-1.296 1.585-2.001 0.805-0.881 1.775-1.756 2.894-2.448 1.35-0.834 2.901-1.393 4.647-1.393s3.297 0.559 4.646 1.393c1.119 0.692 2.089 1.567 2.894 2.448 0.644 0.705 1.175 1.405 1.585 2.001 0.328 0.477 0.572 0.876 0.734 1.158-0.163 0.281-0.407 0.681-0.734 1.158-0.41 0.596-0.94 1.296-1.585 2.001-0.805 0.881-1.775 1.756-2.894 2.448-1.349 0.834-2.9 1.393-4.646 1.393s-3.297-0.559-4.646-1.393c-1.119-0.692-2.089-1.567-2.894-2.448-0.644-0.705-1.175-1.405-1.585-2.001-0.328-0.477-0.572-0.877-0.735-1.158zM16 12c0-1.104-0.449-2.106-1.172-2.828s-1.724-1.172-2.828-1.172-2.106 0.449-2.828 1.172-1.172 1.724-1.172 2.828 0.449 2.106 1.172 2.828 1.724 1.172 2.828 1.172 2.106-0.449 2.828-1.172 1.172-1.724 1.172-2.828zM14 12c0 0.553-0.223 1.051-0.586 1.414s-0.861 0.586-1.414 0.586-1.051-0.223-1.414-0.586-0.586-0.861-0.586-1.414 0.223-1.051 0.586-1.414 0.861-0.586 1.414-0.586 1.051 0.223 1.414 0.586 0.586 0.861 0.586 1.414z"></path>
+            </symbol>
+            <symbol id="icon-search" viewBox="0 0 32 32">
+                <path d="M31.008 27.231l-7.58-6.447c-0.784-0.705-1.622-1.029-2.299-0.998 1.789-2.096 2.87-4.815 2.87-7.787 0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12c2.972 0 5.691-1.081 7.787-2.87-0.031 0.677 0.293 1.515 0.998 2.299l6.447 7.58c1.104 1.226 2.907 1.33 4.007 0.23s0.997-2.903-0.23-4.007zM12 20c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8z"></path>
             </symbol>
         </defs>
     </svg>

@@ -362,7 +362,7 @@ tfoot td{
     text-align: left;
     border: 1px solid grey;
     border-radius: 0.5rem;
-    max-width: 300px;
+    width: 380px;
 }
   
 .card>.title {

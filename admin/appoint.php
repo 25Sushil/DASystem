@@ -4,7 +4,7 @@
 
     $keyword = isset($_GET['keyword'])  ? $_GET['keyword'] : NULL ; //ternary operator
     if(isset($keyword)){
-        $sql = "SELECT * from appointment where fullname like '%$keyword%'";
+        $sql = "SELECT ap.id, ap.fullname, ap.phone, ap.bg, ap.address, ap.date, ap.time, sp.title, doc.fname, ap.status from appointment as ap INNER JOIN specialities as sp ON ap.sid = sp.id INNER JOIN doctor as doc ON ap.did = doc.id where fullname like '%$keyword%'";
     }else{
         $sql = "SELECT ap.id, ap.fullname, ap.phone, ap.bg, ap.address, ap.date, ap.time, sp.title, doc.fname, ap.status from appointment as ap INNER JOIN specialities as sp ON ap.sid = sp.id INNER JOIN doctor as doc ON ap.did = doc.id";
     }
@@ -168,8 +168,8 @@
                                     <button><a href="../admin/appointment/update.php?updateid=<?php echo $row['id']; ?>"><svg class="icon icon-pencil"><use xlink:href="#icon-pencil"></use></svg></a></button>
                                     <button 
                                         
-                                        <?php $class = ($row['status'] == 1 || $row['status'] == 2) ? 'class="disabled"' : ''; echo ($row['status'] == 1) ? 'class="disabled" onclick="return false"' : (($row['status'] == 2) ? ' onclick="return false";' : ' onclick="return true";') ;?>><a 
-                                        style="<?php echo ($row['status'] == 1) ? 'color: gray;' : (($row['status'] == 2) ? 'color: blue;' : 'color: green;') ;?>" href="../admin/appointment/approve.php?approveid=<?php echo $row['id']; ?>"><svg class="icon icon-check-circle"><use xlink:href="#icon-check-circle" ></use></svg></a></button>
+                                        <?php $class = ($row['status'] == 1 || $row['status'] == 2) ? 'class="disabled"' : ''; echo ($row['status'] == 1) ? 'class="disabled" onclick="return false"' : (($row['status'] == 2) ? 'class="disabled" onclick="return false";' : ' onclick="return true";') ;?>><a 
+                                        style="<?php echo ($row['status'] == 1) ? 'color: gray;' : (($row['status'] == 2) ? 'color: gray;' : 'color: green;') ;?>" href="../admin/appointment/approve.php?approveid=<?php echo $row['id']; ?>"><svg class="icon icon-check-circle"><use xlink:href="#icon-check-circle" ></use></svg></a></button>
                                     <button><a href="../admin/appointment/delete.php?deleteid=<?php echo $row['id']; ?>"><svg class="icon icon-trash"><use xlink:href="#icon-trash"></use></svg></a></button>
                                 </td>
                         </tr>
