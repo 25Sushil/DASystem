@@ -37,10 +37,8 @@
     <section class="entry-block">
         <div class="entry-block__description hasbg bgfull-fixed" style="background-image: url('assets/img/doctorgrd.jpg');">
             <div class="text-box">
-                <h1 class="titlestyle1">Avoid Hassels & Delays.</h1>
-                <p>How is heallth today. Sounds like  not good!</p>
-                <P>Don't worry. Find your doctor online. Book as you wish with DAS.</P>
-                <p>We offer you a free doctor channeling service, Make your appointment now.</p> <br>
+                <h2 class="titlestyle1">Avoid Hassels & Delays.</h2> <br>
+                <p>How is heallth today. Sounds like  not good!. Don't worry. Find your doctor online. Book as you wish with DAS.  We offer you a free doctor channeling service, Make your appointment now.</p><br>
                 <a href="patient/form.php" class="button">Make Appointment</a>
             </div>
         </div>
@@ -56,7 +54,7 @@
 
     <section id="services">
         <div class="description">
-            <h1>Services for Your Health</h1>
+            <h2>Services for Your Health</h2>
             <h4 style="color: blue;">Our Departments</h4>
         </div>
         <div class="service-card">
@@ -71,7 +69,7 @@
             ?>
             <div class="service-card-inner">
                 <img src="admin/<?php echo $image_path ?>" alt="<?php echo $image_name ?>"><br><br>
-                <h1><?php echo "$title"; ?></h1>
+                <h3><?php echo "$title"; ?></h3>
                 <p><?php echo "$description"; ?></p>
             </div>
             <?php
@@ -81,7 +79,7 @@
     </section>
 
     <section class="team">
-        <h1>Our Teams</h1>
+        <h2>Our Teams</h2>
         <p>Lorem ipsum dolor sit amet.</p>
         <div class="flip-container">
             <?php

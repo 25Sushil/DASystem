@@ -145,26 +145,10 @@
                                     //         echo $drow['fname'];
                                     //     }
                                     // }
-                                ?>
-                            </p><br>
-                            <p>Speciality: 
-                                <?php echo $row['title'];
-                                    // $sid = $row['sid'];
-                                                
-                                    // // echo $sid;
-                                        
-                                    // if($sid != ''){
-                                    //     $ssql = "SELECT title FROM specialities where id=$sid;";
-                                    //     $sresult = mysqli_query($conn, $ssql);
-                                        
-                                    //     while($srow = mysqli_fetch_assoc($sresult)){
-                                    //         echo $srow['title'];
-                                    //     }
-                                    // }
-                                ?>
-                            </p><br>
-                            <p>Date: <?php echo $row['time'] ?></p><br>
-                            <p>Time: <?php echo $row['date'] ?></p><br>
+                                ?></p><br>
+                            <p>Speciality: <?php echo $row['title'];?></p><br>
+                            <p>Date: <?php echo $row['date'] ?></p><br>
+                            <p>Time: <?php echo $row['time'] ?></p><br>
                         </div>
                             
                         <div class="actions">

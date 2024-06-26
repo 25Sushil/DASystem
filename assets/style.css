@@ -16,7 +16,7 @@ body{
     background-color: black;
 }
 
-.logo{
+header .logo{
     display: flex;
     width: 150px;
 }
@@ -283,15 +283,11 @@ body{
 }
 
 .flip-card-back .title {
-    font-size: 1.5em;
     font-weight: 900;
-    text-align: center;
-    margin: 0;
-    font-size: 25px;
 }
 
 .flip-card-back p{
-    font-size: 20px;
+    font-size: 18px;
 }
 
 footer{
@@ -315,8 +311,9 @@ footer{
 .social-media ul{
     margin-top: 10px;
     display: flex;
+    flex-wrap: wrap;
     list-style: none;
-    gap: 20px;
+    gap: 10px;
     text-decoration: none;
 }
 
@@ -364,6 +361,11 @@ footer .footer-cr{
     font-size: 18px;
 }
 
+footer .logo{
+    display: flex;
+    width: 150px;
+}
+
 .footer-cr p{
     text-align: center;
 }
@@ -391,7 +393,7 @@ footer .footer-cr{
 
 
 /*for mobiles*/
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 320px) {
     *{
         margin: 0;
         padding: 0;
@@ -432,8 +434,9 @@ footer .footer-cr{
         top: 100%;
         right: 0;
         background-color: black;
-        display: block;
-        min-width: 140px;
+        display: flex;
+        width: 80px;
+        justify-content: center;
     }
 
     .main-nav li {
@@ -451,7 +454,7 @@ footer .footer-cr{
     }
 
     .bgfull-fixed {
-        height: 40vh;
+        height: 45vh;
     }
 
     .entry-block__description .text-box{
@@ -476,13 +479,55 @@ footer .footer-cr{
         height: 250px;
     }
     #about-us>.description h1{
-        font-size: 40px;
-        font-size: 50px;
+        font-size: 25px;
     }
     
     #about-us img{
-        width: 150px;
+        width: 180px;
         height: 250px;
     }
-    
+
+    #services .description>h1 {
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-size: 25px;
+    }
+
+    #services .service-card-inner {
+        margin: 10px;
+        padding: 15px;
+        border-radius: 15px;
+        display: inline-block;
+        height: 200px;
+        width: 60%;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        box-shadow: 0 8px 14px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .flip-card-front, .flip-card-back {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+
+    footer .logo {
+        display: block;
+        width: 80px;
+    }
+
+    .box1, .box2, .box3 {
+        display: inline-block;
+        text-align: justify;
+        margin: 10px;
+    }
+
+    .icon {
+        width: 2.5em;
+        height: 2.5em;
+    }
 }

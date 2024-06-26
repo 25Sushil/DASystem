@@ -140,7 +140,6 @@
                             <?php 
                                 while($row = mysqli_fetch_assoc($result)){
                             ?>
-                                <td style="padding: 16px; "><?php echo $row['fname'] ?></td>
                                 <td><?php echo $row['fname'] ?></td>
                                 <td><?php echo $row['email'] ?></td>
                                 <td><?php echo $row['title'] ?></td>
