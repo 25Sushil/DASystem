@@ -24,7 +24,19 @@ body {
     gap: 20px;
     text-align: center;
     align-items: center;
-    justify-content: center;}
+    justify-content: center;
+}
+
+.menu-toggle{
+    display: none;
+    padding: 10px;
+}
+
+.menu-toggle .icon{
+    padding: 0;
+    background-color: transparent;
+    color: #7378ee;
+}
 
 header {
     grid-area: header;
@@ -66,7 +78,7 @@ header p{
 }
 
 .sidebar-items ul{
-    display: flexbox;
+    display: inline;
     margin: 20px;
     text-align: center;
     text-decoration: none;
@@ -187,7 +199,6 @@ li.active a{
 .dash-collection{
     display: flex;
     flex-wrap: wrap;
-    gap: -20px;
     text-align: center;
     justify-content: space-around;
 }
@@ -247,27 +258,8 @@ th{
 }
 
 td{
-    padding: 4px;
-    color: #333;
-    font-size: 14px;
-    font-weight: 400;
-}
-
-tfoot{
-    font-weight: bold;
-    color: white;
-}
-
-tfoot td{
-    display: flex;
     padding: 8px;
-    justify-content: center;
-}
-
-.table-container button{
-    color: aqua;
-    background: none;
-    cursor: pointer;
+    color: #333;
 }
 
 .doctor-info .add{
@@ -301,16 +293,11 @@ tfoot td{
 }
 
 .table-container td>button{
-    text-align: center;
-    color: #fff;
     border: none;
     border-radius: 10px;
-    padding: 15px;
     background-color: rgba(136, 240, 240, 0.76);
-    display: inline-flexbox;
+    display: inline;
     text-align: center;
-    align-items: center;
-    justify-content: space-around;
 }
 
 .filter-bar{
@@ -447,7 +434,7 @@ tfoot td{
 }
 
 .icon-eye, .icon-trash, .icon-pencil, 
-.icon-search, .icon-check-circle, .icon-checkmark{
+.icon-search, .icon-check-circle, .icon-checkmark, .icon-bars{
     width: 5em;
     height: 1.5em;
 }
@@ -455,4 +442,25 @@ tfoot td{
 button .icon-activity{
     width: 5em;
     height: 1.5em;
+}
+
+@media screen and (max-width: 320px) {
+    .menu-toggle { 
+        display: inline-block; 
+    }
+
+    .sidebar.expand { 
+        position: relative; 
+        z-index: 10;
+    }
+
+    .sidebar main.expand ul {
+        position: relative;
+        top: 100%;
+        left: 0;
+        background-color: rgb(243, 243, 243);
+        display: flex;
+        width: 80px;
+        justify-content: center;
+    }
 }

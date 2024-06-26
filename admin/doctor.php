@@ -112,7 +112,7 @@
                     </div>
             
                     <div class="doc">
-                    <?php
+                        <?php
                             $ssql = "SELECT * FROM schedule";
                             $sresult = mysqli_query($conn, $ssql);
 
@@ -146,26 +146,26 @@
                                 <th>phone</th>
                                 <th>Events</th>
                             </tr>
-                            <tbody>
-                                <tr>
-                                        <?php 
-                                        while($row = mysqli_fetch_assoc($result)){
-                                    ?>
-                                        <td><?php echo $row['id'] ?></td>
-                                        <td><?php echo $row['fname'] ?></td>
-                                        <td><?php echo $row['email'] ?></td>
-                                        <td><?php echo $row['title'] ?></td>
-                                        <td><?php echo $row['phone'] ?></td>
-                                        <td class="event">
-                                            <button><a href="../admin/doctor/update.php?updateid=<?php echo $row['id']; ?>"><svg class="icon icon-pencil"><use xlink:href="#icon-pencil"></use></svg></a></button>
-                                            <button><a href="../admin/doctor/delete.php?deleteid=<?php echo $row['id']; ?>"><svg class="icon icon-trash"><use xlink:href="#icon-trash"></use></svg></a></button>
-                                        </td>
-                                </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <?php 
+                                    while($row = mysqli_fetch_assoc($result)){
+                                ?>
+                                    <td><?php echo $row['id'] ?></td>
+                                    <td><?php echo $row['fname'] ?></td>
+                                    <td><?php echo $row['email'] ?></td>
+                                    <td><?php echo $row['title'] ?></td>
+                                    <td><?php echo $row['phone'] ?></td>
+                                    <td class="event">
+                                        <button><a href="../admin/doctor/update.php?updateid=<?php echo $row['id']; ?>"><svg class="icon icon-pencil"><use xlink:href="#icon-pencil"></use></svg></a></button>
+                                        <button><a href="../admin/doctor/delete.php?deleteid=<?php echo $row['id']; ?>"><svg class="icon icon-trash"><use xlink:href="#icon-trash"></use></svg></a></button>
+                                    </td>
+                            </tr>
                                 <?php   
                                     }
                                 ?>
-                            </tbody>
-                        </thead>
+                        </tbody>
                     </table>
                 </div>
             </div>
