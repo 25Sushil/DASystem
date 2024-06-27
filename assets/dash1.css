@@ -27,17 +27,6 @@ body {
     justify-content: center;
 }
 
-.menu-toggle{
-    display: none;
-    padding: 10px;
-}
-
-.menu-toggle .icon{
-    padding: 0;
-    background-color: transparent;
-    color: #7378ee;
-}
-
 header {
     grid-area: header;
     color: #000000;
@@ -445,22 +434,5 @@ button .icon-activity{
 }
 
 @media screen and (max-width: 320px) {
-    .menu-toggle { 
-        display: inline-block; 
-    }
-
-    .sidebar.expand { 
-        position: relative; 
-        z-index: 10;
-    }
-
-    .sidebar main.expand ul {
-        position: relative;
-        top: 100%;
-        left: 0;
-        background-color: rgb(243, 243, 243);
-        display: flex;
-        width: 80px;
-        justify-content: center;
-    }
+    
 }

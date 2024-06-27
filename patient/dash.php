@@ -25,9 +25,9 @@
 <body>
     <section class="dashboard">
         <div class="sidebar">
-            <span class="menu-toggle js-menu-toggle">
+            <!-- <span class="menu-toggle js-menu-toggle">
                 <svg class="icon icon-bars"><use xlink:href="#icon-bars"></use></svg>
-            </span>
+            </span> -->
             <header>
                 <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
                 <h1><?php echo $urow['fullname']; ?></h1>
